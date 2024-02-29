@@ -15,7 +15,15 @@
 
 if(isset($_GET['action'])&& $_GET['action']=="delmat"){
     unset($_SESSION['tab_mat'][$_GET['jour']][$_GET['heure']]);
-    }
+    header("location:emploi.php");
+}
+
+if(isset($_GET['action']) && $_GET['action']==="videremploi"){
+    unset($_SESSION['tab_mat']);
+    
+    header("location:emploi.php");
+}
+
     
 //Récupérer les données du formulaire et alimenter le tableau $tab_mat
 if(isset($_POST["submit"])){
@@ -53,6 +61,8 @@ echo "<option value='$heure'>$heure</option>";
            <input type="text" name="matiere" required>
            <button type="submit" name="submit">Envoyer</button>
            <button type="button" onclick="window.print()">imprimer emploi</button>
+           <button type="button" onclick="window.location.href='emploi.php?action=videremploi'">Nouveau
+               emploi</button>
        </form>
        <hr>
        <?php
@@ -69,8 +79,7 @@ foreach ($jours as $jour) {
 echo "<tr><td>$jour</td>";
 foreach($heures as $heure)
 if(isset($tab_mat["$jour"]["$heure"]))
-echo "<td>".$tab_mat["$jour"]["$heure"]."<a
-href='emploi.php?jour=$jour&heure=$heure&action=delmat'><button>X</button></a>
+echo "<td>".$tab_mat["$jour"]["$heure"]."<a href='emploi.php?jour=$jour&heure=$heure&action=delmat'><button>X</button></a>
 </td> ";
 else
 echo "<td></td>";
